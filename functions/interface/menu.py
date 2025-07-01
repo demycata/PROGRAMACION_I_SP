@@ -22,7 +22,7 @@ def menu(screen):
     N = 83
     fondo_frames = []
     for i in range(0, N+1):  # Empieza en 0
-        num = str(i).zfill(2)  # '00', '01', ..., '83'
+        num = str(i).zfill(2)  # '00', '01', ..., '83' el zfill(2) asegura que el número tenga dos dígitos
         frame = pygame.image.load(f"assets\Frame_{num}_delay-0.05s.png")
         frame = pygame.transform.scale(frame, (800, 600))
         fondo_frames.append(frame)

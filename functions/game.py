@@ -9,7 +9,11 @@ import data.assets as assets
 
 # Game Variables
 
-def transicion_get_ready(screen):
+def transicion_get_ready(screen:any) -> None:
+    '''Función para mostrar la transición de "Get ready..." antes de iniciar el juego.
+    Args:
+        screen: pygame.Surface: La superficie donde se dibujará la transición.
+    '''
     from data.assets import background
     fade = pg.Surface((800, 600))
     fade.fill((0, 0, 0))
@@ -31,7 +35,15 @@ def transicion_get_ready(screen):
     pg.mixer.music.play(-1)
     pg.mixer.music.set_volume(0.2)
 
-def refresh_grid(window, CELLSIZE, grid, cells_already_fire, successful_cells):
+def refresh_grid(window:any, CELLSIZE:int, grid:list, cells_already_fire:list, successful_cells:list) -> None:
+    '''Función para refrescar la cuadrícula del jugador.
+    Args:
+        window: pygame.Surface: La superficie donde se dibujará la cuadrícula.
+        CELLSIZE: int: Tamaño de cada celda en la cuadrícula.
+        grid: list: Matriz que representa el estado del juego.
+        cells_already_fire: list: Lista de celdas que ya han sido disparadas.
+        successful_cells: list: Lista de celdas donde se ha impactado un barco.
+    '''
     # Dibuja solo la cuadrícula del jugador
     functions.draw_grid(window, CELLSIZE, grid, cells_already_fire, successful_cells)
     
@@ -43,7 +55,15 @@ Y QUE LA POS FINAL SEA, SI ES POR EJEMPLO EL BARCO X3, POS INICIAL.X + (50.3) IN
 # Player Initialization
 
 # Main Game loop
-def start(screen, dificult, CELLSIZE, ROWS, COLS):
+def start(screen:any, dificult:int, CELLSIZE:int, ROWS:int, COLS:int) -> None:
+    '''Función para iniciar el juego.
+    Args:
+        screen: pygame.Surface: La superficie donde se dibujará el juego.
+        dificult: int: Nivel de dificultad del juego.
+        CELLSIZE: int: Tamaño de cada celda en la cuadrícula.
+        ROWS: int: Cantidad de filas en la cuadrícula.
+        COLS: int: Cantidad de columnas en la cuadrícula.
+    '''
 
     #ADAPTAR EL JUEGO A LA dificult
     CELLSIZE = (CELLSIZE//dificult)
@@ -55,11 +75,11 @@ def start(screen, dificult, CELLSIZE, ROWS, COLS):
     background = pg.transform.scale(background, (820, 600))
 
     #FUNCIONES DEL JUEGO
-    grid = functions.start_matriz(ROWS, COLS, 0)
-    cells_already_fire = []
-    successful_cells = []
-    cord = functions.gen_cords(grid, CELLSIZE)
-    ships = functions.put_ships(dificult, COLS, ROWS, grid, cord)  
+    grid = functions.start_matriz(ROWS, COLS, 0) #CREA UNA MATRIZ CON FILAS Y COLUMNAS
+    cells_already_fire = [] 
+    successful_cells = [] 
+    cord = functions.gen_cords(grid, CELLSIZE) # CREA UNA MATRIZ CON LAS COORDENADAS DE CADA CELDA
+    ships = functions.put_ships(dificult, COLS, ROWS, grid, cord)  #crea los barcos en la matriz y le asignando las coordenadas
     print(ships)
     functions.show_matriz(grid)
 
@@ -85,19 +105,18 @@ def start(screen, dificult, CELLSIZE, ROWS, COLS):
 
                     if impact:
                         POINTS += 5
-                        print("¡impact! POINTS:", POINTS)
                         assets.sonido_barco.play()
                         assets.sonido_barco.set_volume(0.1)
 
                     elif impact == False:
                         POINTS -= 1
-                        print("Disparo fallido", POINTS)
                         assets.sonido_agua.play()
                         assets.sonido_agua.set_volume(0.1)
 
                 #BOTONES
                     #RESTART
                     if 5 <= posi[0] <= 130 and 135 <= posi[1] <= 159:
+                        # Reiniciar el juego GENERA LOS DATOS NUEVAMENTE
                         grid = functions.start_matriz(ROWS, COLS, 0)
                         cells_already_fire = []
                         successful_cells = []
@@ -116,7 +135,7 @@ def start(screen, dificult, CELLSIZE, ROWS, COLS):
                             mixer.music.set_volume(0.2)
                          
         POINTS += functions.check_ships(ships)
-        functions.show_points(POINTS, screen)
+        functions.show_points(POINTS, screen) #MUESTA LOS PUNTOS EN PANTALLA
         status = functions.check_status(ships)         
         refresh_grid(screen, CELLSIZE, grid, cells_already_fire, successful_cells)
 
