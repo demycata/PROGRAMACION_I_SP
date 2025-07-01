@@ -2,9 +2,9 @@ import pygame as pg
 import settings as config
 import pygame.mixer as mixer
 
-from functions.interface.menu import *
-from functions.interface.menu_levels import *
-from functions.interface.menu_score import *
+from interface.menu import *
+from interface.menu_levels import *
+from interface.menu_score import *
 
 import functions.game as game
 import data.assets as assets
