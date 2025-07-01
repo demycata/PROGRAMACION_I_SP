@@ -14,12 +14,11 @@ def transicion_get_ready(screen:any) -> None:
     Args:
         screen: pygame.Surface: La superficie donde se dibujará la transición.
     '''
-    from data.assets import background
     fade = pg.Surface((800, 600))
     fade.fill((0, 0, 0))
     for alpha in range(0, 255, 10):
         fade.set_alpha(alpha)
-        screen.blit(background, (0, 0))
+        screen.blit(assets.background, (0, 0))
         screen.blit(fade, (0, 0))
         pg.display.update()
         pg.time.delay(20)
@@ -47,10 +46,6 @@ def refresh_grid(window:any, CELLSIZE:int, grid:list, cells_already_fire:list, s
     # Dibuja solo la cuadrícula del jugador
     functions.draw_grid(window, CELLSIZE, grid, cells_already_fire, successful_cells)
     
-'''
-PARA PONER LAS IMAGENES Y QUE CUADRAN QUE LAS CORDENADAS DE LA POS, HACER QUE CUANDO HAGAMOS REC(IMAGEN), PONGASMOS LA POSICION INICIAL EN UNA POS RANDOM
-Y QUE LA POS FINAL SEA, SI ES POR EJEMPLO EL BARCO X3, POS INICIAL.X + (50.3) INCLUSIVE
-'''
 
 # Player Initialization
 
